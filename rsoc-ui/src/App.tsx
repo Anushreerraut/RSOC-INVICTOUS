@@ -6,8 +6,10 @@ import Scans from './pages/Scans';
 import Findings from './pages/Findings';
 import Targets from './pages/Targets';
 import Manual from './pages/Manual';
+import Reviews from './pages/Reviews';
+import Chatbot from './components/Chatbot';
 
-type Page = 'dashboard' | 'new-scan' | 'scans' | 'findings' | 'targets' | 'manual';
+type Page = 'dashboard' | 'new-scan' | 'scans' | 'findings' | 'targets' | 'manual' | 'reviews';
 
 const NAV = [
   { id: 'dashboard', label: 'Dashboard', icon: '📊' },
@@ -16,6 +18,7 @@ const NAV = [
   { id: 'findings',  label: 'Findings',  icon: '⚠️' },
   { id: 'targets',   label: 'Targets',   icon: '🎯' },
   { id: 'manual',    label: 'User Manual', icon: '📘' },
+  { id: 'reviews',   label: 'Feedback',  icon: '💬' },
 ] as const;
 
 export default function App() {
@@ -29,6 +32,7 @@ export default function App() {
       case 'findings':  return <Findings />;
       case 'targets':   return <Targets />;
       case 'manual':    return <Manual />;
+      case 'reviews':   return <Reviews />;
     }
   };
 
@@ -66,6 +70,7 @@ export default function App() {
       <main className="main">
         {renderPage()}
       </main>
+      <Chatbot />
     </div>
   );
 }

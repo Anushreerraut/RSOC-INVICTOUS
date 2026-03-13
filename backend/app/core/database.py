@@ -21,5 +21,5 @@ def get_db():
 
 
 def create_tables():
-    from app.models import scan, finding, target, user  # noqa: F401
+    from app.models import scan, finding, target, user, review  # noqa: F401
     Base.metadata.create_all(bind=engine)

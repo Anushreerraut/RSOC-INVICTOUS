@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.database import create_tables
-from app.api.routes import auth, targets, scans, findings
+from app.api.routes import auth, targets, scans, findings, reviews
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -22,6 +22,7 @@ app.include_router(auth.router, prefix="/api")
 app.include_router(targets.router, prefix="/api")
 app.include_router(scans.router, prefix="/api")
 app.include_router(findings.router, prefix="/api")
+app.include_router(reviews.router, prefix="/api")
 
 
 @app.on_event("startup")

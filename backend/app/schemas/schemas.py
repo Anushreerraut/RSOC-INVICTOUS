@@ -97,3 +97,21 @@ class Token(BaseModel):
 class LoginRequest(BaseModel):
     username: str
     password: str
+
+
+# ─── Reviews ─────────────────────────────────────────────────────────────────
+class ReviewCreate(BaseModel):
+    user_name: Optional[str] = "Anonymous"
+    rating: int
+    comment: Optional[str] = None
+
+
+class ReviewOut(BaseModel):
+    id: str
+    user_name: str
+    rating: int
+    comment: Optional[str]
+    created_at: datetime
+
+    class Config:
+        from_attributes = True

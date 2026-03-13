@@ -17,6 +17,7 @@
 | 🗑️ **History Management** | Delete individual scans or clear all history |
 | 🛡️ **WAF/IPS/IDS Detection** | Detects Cloudflare, AWS WAF, ModSecurity, and other active defenses |
 | 📖 **User Manual** | Built-in interactive guide for new users |
+| 💬 **Review System** | Submit feedback and suggestions directly from the dashboard |
 
 ---
 
@@ -52,8 +53,8 @@ http://localhost:5173
 RSOC/
 ├── backend/                    # FastAPI Python backend
 │   └── app/
-│       ├── api/routes/         # REST API endpoints
-│       ├── models/             # SQLAlchemy database models
+│       ├── api/routes/         # REST API endpoints (scans, findings, reviews)
+│       ├── models/             # SQLAlchemy database models (scan, finding, review)
 │       ├── scanner/
 │       │   ├── engine.py       # Core scanning orchestrator
 │       │   └── modules/        # Individual scanner modules

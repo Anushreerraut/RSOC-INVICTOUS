@@ -18,6 +18,12 @@ export default function Scans() {
     fetchScans();
   };
 
+  const handleDeleteAll = async () => {
+    if (!confirm('Are you sure you want to delete ALL scans and their findings? This cannot be undone.')) return;
+    await api.del('/scans');
+    fetchScans();
+  };
+
   const riskScore = (summary: any) => {
     if (!summary) return 0;
     return Math.min(100, (summary.critical || 0) * 20 + (summary.high || 0) * 10 + (summary.medium || 0) * 5 + (summary.low || 0) * 2);
@@ -30,7 +36,12 @@ export default function Scans() {
           <h1>📋 Scan History</h1>
           <p>All past and running scans</p>
         </div>
-        <button className="btn btn-ghost" onClick={fetchScans}>↻ Refresh</button>
+        <div className="flex gap-2">
+          {scans.length > 0 && (
+            <button className="btn btn-danger btn-outline" onClick={handleDeleteAll}>🗑️ Delete All</button>
+          )}
+          <button className="btn btn-ghost" onClick={fetchScans}>↻ Refresh</button>
+        </div>
       </div>
 
       <div className="card">

@@ -17,6 +17,8 @@ export default function Dashboard() {
     api.get('/findings?limit=10').then(setFindings);
   }, []);
 
+  const isBlank = stats && stats.total_scans === 0;
+
   const pieData = stats ? [
     { name: 'Critical', value: stats.critical, color: COLORS.critical },
     { name: 'High', value: stats.high, color: COLORS.high },
@@ -36,33 +38,62 @@ export default function Dashboard() {
         <p>Overview of your API security posture</p>
       </div>
 
-      <div className="stats-grid">
-        <div className="stat-card total">
-          <div className="label">Total Scans</div>
-          <div className="value">{stats?.total_scans ?? '—'}</div>
-          <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#6366f1,transparent)' }} />
+      {isBlank ? (
+        <div className="card fadeIn" style={{ textAlign: 'center', padding: '60px 40px', marginTop: 20 }}>
+          <div style={{ fontSize: 72, marginBottom: 20 }}>🚀</div>
+          <h2 style={{ fontSize: '2rem', marginBottom: 12, background: 'linear-gradient(90deg, #6366f1, #818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            No Scans Yet!
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: 480, margin: '0 auto 30px' }}>
+            Your dashboard is empty because you have no scan history. Run your first API security scan to start detecting vulnerabilities.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
+            <div className="card" style={{ padding: '20px 24px', maxWidth: 200, textAlign: 'left' }}>
+              <div style={{ fontSize: 28, marginBottom: 8 }}>1️⃣</div>
+              <div style={{ fontWeight: 700, marginBottom: 4 }}>Start a Scan</div>
+              <div style={{ color: 'var(--muted)', fontSize: 13 }}>Go to New Scan and enter your API URL.</div>
+            </div>
+            <div className="card" style={{ padding: '20px 24px', maxWidth: 200, textAlign: 'left' }}>
+              <div style={{ fontSize: 28, marginBottom: 8 }}>2️⃣</div>
+              <div style={{ fontWeight: 700, marginBottom: 4 }}>Review Results</div>
+              <div style={{ color: 'var(--muted)', fontSize: 13 }}>View detailed findings with remediations.</div>
+            </div>
+            <div className="card" style={{ padding: '20px 24px', maxWidth: 200, textAlign: 'left' }}>
+              <div style={{ fontSize: 28, marginBottom: 8 }}>3️⃣</div>
+              <div style={{ fontWeight: 700, marginBottom: 4 }}>Export Report</div>
+              <div style={{ color: 'var(--muted)', fontSize: 13 }}>Download a CSV for reporting.</div>
+            </div>
+          </div>
         </div>
-        <div className="stat-card total">
-          <div className="label">Total Findings</div>
-          <div className="value">{stats?.total_findings ?? '—'}</div>
-          <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#818cf8,transparent)' }} />
-        </div>
-        <div className="stat-card critical">
-          <div className="label">Critical</div>
-          <div className="value">{stats?.critical ?? '—'}</div>
-          <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#ef4444,transparent)' }} />
-        </div>
-        <div className="stat-card high">
-          <div className="label">High</div>
-          <div className="value">{stats?.high ?? '—'}</div>
-          <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#f97316,transparent)' }} />
-        </div>
-        <div className="stat-card low">
-          <div className="label">Completed Scans</div>
-          <div className="value">{stats?.completed_scans ?? '—'}</div>
-          <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#22c55e,transparent)' }} />
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className="stats-grid">
+            <div className="stat-card total">
+              <div className="label">Total Scans</div>
+              <div className="value">{stats?.total_scans ?? '—'}</div>
+              <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#6366f1,transparent)' }} />
+            </div>
+            <div className="stat-card total">
+              <div className="label">Total Findings</div>
+              <div className="value">{stats?.total_findings ?? '—'}</div>
+              <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#818cf8,transparent)' }} />
+            </div>
+            <div className="stat-card critical">
+              <div className="label">Critical</div>
+              <div className="value">{stats?.critical ?? '—'}</div>
+              <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#ef4444,transparent)' }} />
+            </div>
+            <div className="stat-card high">
+              <div className="label">High</div>
+              <div className="value">{stats?.high ?? '—'}</div>
+              <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#f97316,transparent)' }} />
+            </div>
+            <div className="stat-card low">
+              <div className="label">Completed Scans</div>
+              <div className="value">{stats?.completed_scans ?? '—'}</div>
+              <div className="glow-bar" style={{ background: 'linear-gradient(90deg,#22c55e,transparent)' }} />
+            </div>
+          </div>
 
       <div className="chart-grid">
         <div className="card">
@@ -132,6 +163,8 @@ export default function Dashboard() {
           )}
         </div>
       </div>
+        </>
+      )}
     </div>
   );
 }

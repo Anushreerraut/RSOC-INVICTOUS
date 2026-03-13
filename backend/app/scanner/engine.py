@@ -12,7 +12,7 @@ from typing import List, Dict, Any
 from app.core.database import SessionLocal
 from app.models.scan import Scan, ScanStatus
 from app.models.finding import Finding, Severity
-from app.scanner.modules import discovery, auth_check, injection, rate_limit, data_exposure, misconfiguration
+from app.scanner.modules import discovery, auth_check, injection, rate_limit, data_exposure, misconfiguration, waf_detector, mass_assignment
 
 
 SEVERITY_ORDER = {"critical": 0, "high": 1, "medium": 2, "low": 3, "info": 4}
@@ -80,6 +80,10 @@ async def _scan_endpoint(
     found = await data_exposure.check_data_exposure(client, url, method, headers)
     all_findings.extend(found)
 
+    # 2b. WAF / IPS / IDS Detection
+    found = await waf_detector.check_waf_ips(client, url, method, headers)
+    all_findings.extend(found)
+
     # 3. Security Misconfiguration (headers + CORS + HTTP methods)
     found = await misconfiguration.check_security_headers(client, url, method, headers)
     all_findings.extend(found)
@@ -108,6 +112,10 @@ async def _scan_endpoint(
 
         found = await injection.test_path_traversal(client, url, method, params, headers)
         all_findings.extend(found)
+
+    # 5b. Mass Assignment (only if POST/PUT/PATCH)
+    found = await mass_assignment.check_mass_assignment(client, url, method, headers)
+    all_findings.extend(found)
 
     # 6. Rate Limiting (only on auth/sensitive-looking endpoints)
     sensitive_keywords = ["login", "auth", "token", "password", "register", "reset", "verify"]

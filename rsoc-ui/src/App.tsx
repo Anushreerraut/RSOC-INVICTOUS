@@ -5,8 +5,9 @@ import NewScan from './pages/NewScan';
 import Scans from './pages/Scans';
 import Findings from './pages/Findings';
 import Targets from './pages/Targets';
+import Manual from './pages/Manual';
 
-type Page = 'dashboard' | 'new-scan' | 'scans' | 'findings' | 'targets';
+type Page = 'dashboard' | 'new-scan' | 'scans' | 'findings' | 'targets' | 'manual';
 
 const NAV = [
   { id: 'dashboard', label: 'Dashboard', icon: '📊' },
@@ -14,6 +15,7 @@ const NAV = [
   { id: 'scans',     label: 'Scan History', icon: '📋' },
   { id: 'findings',  label: 'Findings',  icon: '⚠️' },
   { id: 'targets',   label: 'Targets',   icon: '🎯' },
+  { id: 'manual',    label: 'User Manual', icon: '📘' },
 ] as const;
 
 export default function App() {
@@ -26,6 +28,7 @@ export default function App() {
       case 'scans':     return <Scans />;
       case 'findings':  return <Findings />;
       case 'targets':   return <Targets />;
+      case 'manual':    return <Manual />;
     }
   };
 

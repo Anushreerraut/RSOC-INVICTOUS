@@ -1,0 +1,18 @@
+{
+  "id": "13c95c28-a32d-42d4-b17b-e23e30bf4d78",
+  "target_url": "https://cloudflare.com",
+  "scan_type": "url",
+  "status": "completed",
+  "summary": {
+    "critical": 2,
+    "high": 2,
+    "medium": 38,
+    "low": 37,
+    "info": 152,
+    "total": 231
+  },
+  "started_at": "2026-03-13T08:49:29.123002",
+  "completed_at": "2026-03-13T08:50:44.623843",
+  "created_at": "2026-03-13T08:49:29.078061",
+  "error_message": null
+}

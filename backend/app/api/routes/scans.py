@@ -48,3 +48,9 @@ def delete_scan(scan_id: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Scan not found")
     db.delete(scan)
     db.commit()
+
+
+@router.delete("", status_code=204)
+def delete_all_scans(db: Session = Depends(get_db)):
+    db.query(Scan).delete()
+    db.commit()
